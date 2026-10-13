@@ -1,0 +1,46 @@
+{
+  "checklist": [
+    {
+      "instruction": "Take Metformin 500mg twice daily",
+      "marathi": "मेटफ़ॉर्मिन 500mg दुपारी दोन्ही वेळ घ्या",
+      "source_quote": "Metformin 500mg twice daily"
+    },
+    {
+      "instruction": "Take Insulin glargine 10 units at night",
+      "marathi": "इन्सुलिन ग्लार्गिन 10 units रात्री घ्या",
+      "source_quote": "Insulin glargine 10 units at night"
+    }
+  ],
+  "red_panel_items": [
+    {
+      "instruction": "Visit diabetes clinic in 2 weeks",
+      "source_quote": "Visit diabetes clinic in 2 weeks",
+      "status": "vague"
+    },
+    {
+      "instruction": "Check blood sugar daily",
+      "source_quote": "Check blood sugar daily",
+      "status": "missing"
+    }
+  ],
+  "back_translation_check": {
+    "original": "Take Metformin 500mg twice daily",
+    "back_translated": "Take Metformin 500mg two times a day",
+    "drift_detected": false,
+    "drift_explanation": null
+  },
+  "teach_back_quiz": {
+    "questions": [
+      {
+        "question": "Metformin 500mg किती वेळ घ्यायचे?",
+        "options": ["Once a day", "Twice a day", "Thrice a day", "Not at all"],
+        "correct_answer": "Twice a day",
+        "source_quote": "Metformin 500mg twice daily"
+      }
+    ],
+    "user_answers": [],
+    "score": 0
+  },
+  "hero_metric": 2,
+  "can_generate": true
+}

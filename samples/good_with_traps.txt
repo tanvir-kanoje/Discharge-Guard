@@ -1,0 +1,12 @@
+Patient Name: John Doe
+Age: 45
+Diagnosis: Type 2 Diabetes
+Discharge Medications:
+  - Metformin 500mg twice daily
+  - Insulin glargine 10 units at night
+Follow-up:
+  - Visit diabetes clinic in 2 weeks
+  - Check blood sugar daily
+Warnings:
+  - Report any signs of infection
+  - Avoid sugary drinks
