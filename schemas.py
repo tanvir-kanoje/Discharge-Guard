@@ -9,6 +9,9 @@ class VerifiedItem(BaseModel):
     instruction: str
     source_quote: str
     status: Literal["clear", "missing", "conflicting", "vague"]
+    drift: bool = False
+    drift_reason: Optional[str] = None
+    marathi_invalid: bool = False
 
 class TranslationItem(BaseModel):
     english: str
