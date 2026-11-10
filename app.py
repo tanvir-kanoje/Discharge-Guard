@@ -27,25 +27,25 @@ st.markdown("""
         color: #1E293B;
     }
     
-    /* Main Background */
+    /* Main Background: Soft Serene Sky Tint */
     .stApp {
-        background-color: #F8FAFC;
+        background: linear-gradient(180deg, #F8FAFC 0%, #F0F9FF 100%);
     }
 
-    /* Soft Header Banner */
+    /* Soft Header Banner: Soothing Cool Tones (Serene Blue to Healing Mint) */
     .hero-container {
-        background: linear-gradient(135deg, #F0FDFA 0%, #E6FFFA 50%, #F8FAFC 100%);
-        border: 1px solid #CCFBF1;
+        background: linear-gradient(135deg, #F0F9FF 0%, #E0F2FE 35%, #ECFDF5 70%, #F0FDF4 100%);
+        border: 1px solid #BAE6FD;
         border-radius: 20px;
-        padding: 28px 32px;
+        padding: 28px 34px;
         margin-bottom: 24px;
-        box-shadow: 0 4px 20px -4px rgba(13, 148, 136, 0.08);
+        box-shadow: 0 4px 20px -4px rgba(2, 132, 199, 0.08);
     }
     
     .hero-title {
         font-size: 32px;
         font-weight: 700;
-        color: #0F766E;
+        color: #0369A1;
         letter-spacing: -0.5px;
         margin: 0;
         display: flex;
@@ -55,41 +55,42 @@ st.markdown("""
     
     .hero-subtitle {
         font-size: 15px;
-        color: #475569;
+        color: #334155;
         margin-top: 8px;
-        line-height: 1.5;
+        line-height: 1.55;
     }
 
-    /* Clinical Decision Support Banner */
+    /* Clinical Decision Support Banner: Calming Serene Sky & Mint */
     .clinical-banner {
-        background: #FEF3C7;
-        border: 1px solid #FDE68A;
+        background: #F0F9FF;
+        border: 1px solid #BAE6FD;
         border-radius: 12px;
-        padding: 10px 16px;
+        padding: 11px 18px;
         font-size: 13.5px;
-        color: #92400E;
+        color: #0369A1;
         font-weight: 500;
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: 10px;
         margin-bottom: 24px;
+        box-shadow: 0 2px 8px -2px rgba(2, 132, 199, 0.04);
     }
 
-    /* Soft Cards */
+    /* Soft Cards with Serene Accent */
     .card-box {
         background: #FFFFFF;
         border: 1px solid #E2E8F0;
         border-radius: 16px;
         padding: 22px;
         margin-bottom: 18px;
-        box-shadow: 0 2px 10px -2px rgba(15, 23, 42, 0.04);
+        box-shadow: 0 2px 12px -2px rgba(2, 132, 199, 0.04);
         transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
     .card-box:hover {
-        box-shadow: 0 6px 16px -2px rgba(15, 23, 42, 0.07);
+        box-shadow: 0 6px 18px -2px rgba(2, 132, 199, 0.08);
     }
 
-    /* Red Panel Alert Cards */
+    /* Red Panel Alert Cards: Soft Rose-Coral for Calm Clinical Attention */
     .red-panel-card {
         background: #FFF1F2;
         border: 1px solid #FECDD3;
@@ -97,6 +98,7 @@ st.markdown("""
         border-radius: 14px;
         padding: 18px 20px;
         margin-bottom: 14px;
+        box-shadow: 0 2px 8px -2px rgba(225, 29, 72, 0.05);
     }
 
     .red-panel-badge {
@@ -112,14 +114,15 @@ st.markdown("""
         margin-bottom: 8px;
     }
 
-    /* Checklist Card */
+    /* Checklist Card: Healing Mint Left Border */
     .checklist-card {
         background: #FFFFFF;
         border: 1px solid #E2E8F0;
+        border-left: 4px solid #10B981;
         border-radius: 16px;
-        padding: 20px;
+        padding: 20px 22px;
         margin-bottom: 16px;
-        box-shadow: 0 2px 8px -2px rgba(15, 23, 42, 0.04);
+        box-shadow: 0 2px 10px -2px rgba(16, 185, 129, 0.04);
     }
 
     .devanagari-text {
@@ -138,17 +141,17 @@ st.markdown("""
     }
 
     .source-quote-box {
-        background: #F8FAFC;
-        border: 1px dashed #CBD5E1;
+        background: #F0F9FF;
+        border: 1px dashed #BAE6FD;
         border-radius: 8px;
         padding: 8px 12px;
         font-size: 12.5px;
-        color: #475569;
+        color: #0369A1;
         font-style: italic;
         margin-top: 10px;
     }
 
-    /* Metric Badges */
+    /* Metric Badges: Serene Blue & Healing Green */
     .metric-badge-container {
         display: flex;
         gap: 16px;
@@ -160,16 +163,16 @@ st.markdown("""
         flex: 1;
         min-width: 220px;
         background: #FFFFFF;
-        border: 1px solid #E2E8F0;
+        border: 1px solid #E0F2FE;
         border-radius: 14px;
         padding: 16px 20px;
-        box-shadow: 0 2px 6px -2px rgba(15, 23, 42, 0.03);
+        box-shadow: 0 2px 10px -2px rgba(2, 132, 199, 0.04);
     }
 
     .metric-val {
         font-size: 28px;
         font-weight: 700;
-        color: #0F766E;
+        color: #0284C7;
     }
 
     .metric-lbl {
@@ -188,11 +191,11 @@ st.markdown("""
         font-weight: 600;
         margin-right: 6px;
     }
-    .badge-clear { background: #ECFDF5; color: #047857; }
-    .badge-vague { background: #FEF3C7; color: #B45309; }
-    .badge-missing { background: #FEE2E2; color: #B91C1C; }
+    .badge-clear { background: #ECFDF5; color: #047857; border: 1px solid #A7F3D0; }
+    .badge-vague { background: #FEF3C7; color: #B45309; border: 1px solid #FDE68A; }
+    .badge-missing { background: #FEE2E2; color: #B91C1C; border: 1px solid #FECDD3; }
 
-    /* Button Styling */
+    /* Button Styling: Serene Cerulean Blue */
     div.stButton > button {
         border-radius: 12px;
         font-weight: 600;
@@ -201,14 +204,14 @@ st.markdown("""
         transition: all 0.2s ease;
     }
     div.stButton > button[kind="primary"] {
-        background-color: #0D9488;
-        border-color: #0D9488;
+        background-color: #0284C7;
+        border-color: #0284C7;
         color: white;
     }
     div.stButton > button[kind="primary"]:hover {
-        background-color: #0F766E;
-        border-color: #0F766E;
-        box-shadow: 0 4px 12px rgba(13, 148, 136, 0.25);
+        background-color: #0369A1;
+        border-color: #0369A1;
+        box-shadow: 0 4px 14px rgba(2, 132, 199, 0.28);
     }
 </style>
 """, unsafe_allow_html=True)
@@ -482,7 +485,7 @@ if "pipeline_result" in st.session_state:
             verified_count = len(result.checklist)
             st.markdown(f"""
             <div class="metric-tile">
-                <div class="metric-val" style="color: #0D9488;">{verified_count}</div>
+                <div class="metric-val" style="color: #059669;">{verified_count}</div>
                 <div class="metric-lbl">Verified Safe Clinical Orders</div>
             </div>
             """, unsafe_allow_html=True)
