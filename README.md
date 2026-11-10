@@ -4,10 +4,13 @@
 > *Built for the RBU Google Hackathon • Powered by Google Gemini 2.5 Flash Multimodal Vision*
 
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/)
+[![Deploy on Streamlit](https://img.shields.io/badge/Deploy%20on-share.streamlit.io-FF4B4B?logo=streamlit&logoColor=white)](https://share.streamlit.io/)
 [![Google Gemini](https://img.shields.io/badge/Google%20Gemini-2.5%20Flash%20Multimodal-4285F4?logo=google&logoColor=white)](https://aistudio.google.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Zero-Cost Deployment](https://img.shields.io/badge/Hosting%20Cost-%240.00%20(Free%20Tier)-059669)](#-100-free-architecture-zero-cost--zero-model-downloads)
 [![Indic Languages](https://img.shields.io/badge/Languages-English%20%7C%20%E0%A4%AE%E0%A4%B0%E0%A4%BE%E0%A4%A0%E0%A5%80%20%7C%20%E0%A4%B9%E0%A4%BF%E0%A4%82%E0%A4%A6%E0%A5%80-0284C7)](#-two-stage-clinical-pipeline)
+
+> 🚀 **Live Free Cloud Deployment:** Deploy instantly on **[https://share.streamlit.io/](https://share.streamlit.io/)** (Zero server cost, zero model weights to download).
 
 ---
 
@@ -166,17 +169,17 @@ DischargeGuard is engineered for immediate hackathon evaluation and resource-con
 
 ---
 
-### Option 2: Deploy to Streamlit Community Cloud (3 Minutes)
+### Option 2: Deploy to Streamlit Community Cloud ([https://share.streamlit.io/](https://share.streamlit.io/)) (3 Minutes)
 
 1. Fork or push this repository to your personal GitHub account.
-2. Visit **[share.streamlit.io](https://share.streamlit.io/)** and sign in with GitHub.
-3. Click **"New app"** $\rightarrow$ select `Discharge-Guard`, branch `main`, file `app.py`.
-4. Under **Advanced settings $\rightarrow$ Secrets**, add:
+2. Visit **[https://share.streamlit.io/](https://share.streamlit.io/)** and sign in with your GitHub account.
+3. Click **"New app"** $\rightarrow$ select your repository `Discharge-Guard`, branch `main`, and main file `app.py`.
+4. Under **Advanced settings $\rightarrow$ Secrets**, add your free Google AI Studio key:
    ```toml
    GEMINI_API_KEY = "your_actual_gemini_api_key"
    GEMINI_MODEL = "gemini-2.5-flash"
    ```
-5. Click **"Deploy!"** Your application will be live at a public URL for evaluators.
+5. Click **"Deploy!"** Your application will be live at a public URL (e.g. `https://discharge-guard.streamlit.app`) for evaluators and clinicians.
 
 ---
 

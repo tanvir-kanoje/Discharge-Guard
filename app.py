@@ -20,32 +20,45 @@ st.set_page_config(
 st.markdown("""
 <style>
     /* Global Font & Smooth Reset */
-    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap');
     
     html, body, [class*="css"] {
         font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-        color: #1E293B;
+        color: #0F172A;
     }
     
-    /* Main Background: Soft Serene Sky Tint */
-    .stApp {
-        background: linear-gradient(180deg, #F8FAFC 0%, #F0F9FF 100%);
+    /* Primary Viewport & Canvas Background: Soothing Sky to Mint Gradient */
+    [data-testid="stAppViewContainer"], .stApp {
+        background: linear-gradient(180deg, #E0F2FE 0%, #F0FDF4 45%, #E6FFFA 100%) !important;
+    }
+    
+    .main, section.main, .block-container {
+        background: transparent !important;
+    }
+    
+    header[data-testid="stHeader"] {
+        background: transparent !important;
     }
 
-    /* Soft Header Banner: Soothing Cool Tones (Serene Blue to Healing Mint) */
+    [data-testid="stSidebar"] {
+        background: linear-gradient(180deg, #E0F2FE 0%, #DDF4FF 100%) !important;
+        border-right: 1.5px solid #BAE6FD !important;
+    }
+
+    /* Soft Header Banner: Rich Serene Cerulean to Healing Emerald */
     .hero-container {
-        background: linear-gradient(135deg, #F0F9FF 0%, #E0F2FE 35%, #ECFDF5 70%, #F0FDF4 100%);
-        border: 1px solid #BAE6FD;
+        background: linear-gradient(135deg, #BAE6FD 0%, #7DD3FC 28%, #A7F3D0 72%, #6EE7B7 100%) !important;
+        border: 2px solid #38BDF8 !important;
         border-radius: 20px;
-        padding: 28px 34px;
+        padding: 30px 36px;
         margin-bottom: 24px;
-        box-shadow: 0 4px 20px -4px rgba(2, 132, 199, 0.08);
+        box-shadow: 0 8px 30px -4px rgba(2, 132, 199, 0.18) !important;
     }
     
     .hero-title {
-        font-size: 32px;
-        font-weight: 700;
-        color: #0369A1;
+        font-size: 34px !important;
+        font-weight: 800 !important;
+        color: #0369A1 !important;
         letter-spacing: -0.5px;
         margin: 0;
         display: flex;
@@ -54,51 +67,99 @@ st.markdown("""
     }
     
     .hero-subtitle {
-        font-size: 15px;
-        color: #334155;
-        margin-top: 8px;
-        line-height: 1.55;
+        font-size: 15.5px !important;
+        color: #0F172A !important;
+        font-weight: 500 !important;
+        margin-top: 10px;
+        line-height: 1.6;
     }
 
-    /* Clinical Decision Support Banner: Calming Serene Sky & Mint */
+    /* Clinical Decision Support Banner */
     .clinical-banner {
-        background: #F0F9FF;
-        border: 1px solid #BAE6FD;
-        border-radius: 12px;
-        padding: 11px 18px;
-        font-size: 13.5px;
-        color: #0369A1;
-        font-weight: 500;
+        background: #FEF3C7 !important;
+        border: 1.5px solid #FCD34D !important;
+        border-radius: 14px;
+        padding: 12px 20px;
+        font-size: 14px;
+        color: #92400E !important;
+        font-weight: 600;
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 12px;
         margin-bottom: 24px;
-        box-shadow: 0 2px 8px -2px rgba(2, 132, 199, 0.04);
+        box-shadow: 0 4px 12px -2px rgba(217, 119, 6, 0.12);
+    }
+
+    /* Input Tabs Styling: Visible Serene Blue Pills */
+    .stTabs [data-baseweb="tab-list"] {
+        background-color: #BAE6FD !important;
+        padding: 6px !important;
+        border-radius: 14px !important;
+        gap: 6px !important;
+    }
+
+    .stTabs [data-baseweb="tab"] {
+        background-color: transparent !important;
+        border-radius: 10px !important;
+        padding: 9px 18px !important;
+        color: #0369A1 !important;
+        font-weight: 600 !important;
+        border: none !important;
+    }
+
+    .stTabs [aria-selected="true"] {
+        background-color: #FFFFFF !important;
+        color: #0284C7 !important;
+        box-shadow: 0 2px 10px rgba(2, 132, 199, 0.18) !important;
+    }
+
+    /* Text Area & Input Enhancement */
+    .stTextArea textarea {
+        background-color: #FFFFFF !important;
+        border: 2px solid #BAE6FD !important;
+        border-radius: 14px !important;
+        color: #0F172A !important;
+        font-size: 14.5px !important;
+        box-shadow: 0 2px 8px rgba(2, 132, 199, 0.06) !important;
+    }
+    
+    .stTextArea textarea:focus {
+        border-color: #0284C7 !important;
+        box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.25) !important;
+    }
+
+    /* File Uploader Container */
+    [data-testid="stFileUploader"] {
+        background-color: #FFFFFF !important;
+        border: 2px dashed #38BDF8 !important;
+        border-radius: 14px !important;
+        padding: 16px !important;
+        box-shadow: 0 2px 10px rgba(2, 132, 199, 0.05) !important;
     }
 
     /* Soft Cards with Serene Accent */
     .card-box {
-        background: #FFFFFF;
-        border: 1px solid #E2E8F0;
+        background: #FFFFFF !important;
+        border: 1.5px solid #BAE6FD !important;
         border-radius: 16px;
-        padding: 22px;
-        margin-bottom: 18px;
-        box-shadow: 0 2px 12px -2px rgba(2, 132, 199, 0.04);
+        padding: 24px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 18px -2px rgba(2, 132, 199, 0.08) !important;
         transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
     .card-box:hover {
-        box-shadow: 0 6px 18px -2px rgba(2, 132, 199, 0.08);
+        box-shadow: 0 8px 24px -2px rgba(2, 132, 199, 0.14) !important;
     }
 
     /* Red Panel Alert Cards: Soft Rose-Coral for Calm Clinical Attention */
     .red-panel-card {
-        background: #FFF1F2;
-        border: 1px solid #FECDD3;
-        border-left: 5px solid #E11D48;
-        border-radius: 14px;
-        padding: 18px 20px;
-        margin-bottom: 14px;
-        box-shadow: 0 2px 8px -2px rgba(225, 29, 72, 0.05);
+        background: #FFF5F5 !important;
+        border: 1.5px solid #FECDD3 !important;
+        border-left: 8px solid #E11D48 !important;
+        border-radius: 16px;
+        padding: 20px 24px;
+        margin-bottom: 16px;
+        box-shadow: 0 4px 16px -2px rgba(225, 29, 72, 0.1) !important;
     }
 
     .red-panel-badge {
@@ -116,39 +177,39 @@ st.markdown("""
 
     /* Checklist Card: Healing Mint Left Border */
     .checklist-card {
-        background: #FFFFFF;
-        border: 1px solid #E2E8F0;
-        border-left: 4px solid #10B981;
+        background: #FFFFFF !important;
+        border: 1.5px solid #A7F3D0 !important;
+        border-left: 8px solid #059669 !important;
         border-radius: 16px;
-        padding: 20px 22px;
-        margin-bottom: 16px;
-        box-shadow: 0 2px 10px -2px rgba(16, 185, 129, 0.04);
+        padding: 22px 24px;
+        margin-bottom: 18px;
+        box-shadow: 0 4px 16px -2px rgba(5, 150, 105, 0.1) !important;
     }
 
     .devanagari-text {
         font-family: 'Noto Sans Devanagari', sans-serif;
-        font-size: 22px;
-        font-weight: 600;
-        color: #0F172A;
-        line-height: 1.45;
+        font-size: 23px !important;
+        font-weight: 700 !important;
+        color: #0F172A !important;
+        line-height: 1.5;
         margin-bottom: 6px;
     }
 
     .english-subtext {
-        font-size: 14.5px;
-        color: #64748B;
-        font-weight: 400;
+        font-size: 15px !important;
+        color: #475569 !important;
+        font-weight: 500 !important;
     }
 
     .source-quote-box {
-        background: #F0F9FF;
-        border: 1px dashed #BAE6FD;
-        border-radius: 8px;
-        padding: 8px 12px;
-        font-size: 12.5px;
-        color: #0369A1;
+        background: #F0F9FF !important;
+        border: 1.5px dashed #7DD3FC !important;
+        border-radius: 10px;
+        padding: 10px 14px;
+        font-size: 13px !important;
+        color: #0369A1 !important;
         font-style: italic;
-        margin-top: 10px;
+        margin-top: 12px;
     }
 
     /* Metric Badges: Serene Blue & Healing Green */
@@ -162,23 +223,23 @@ st.markdown("""
     .metric-tile {
         flex: 1;
         min-width: 220px;
-        background: #FFFFFF;
-        border: 1px solid #E0F2FE;
-        border-radius: 14px;
-        padding: 16px 20px;
-        box-shadow: 0 2px 10px -2px rgba(2, 132, 199, 0.04);
+        background: #FFFFFF !important;
+        border: 2px solid #BAE6FD !important;
+        border-radius: 16px;
+        padding: 18px 22px;
+        box-shadow: 0 4px 16px -2px rgba(2, 132, 199, 0.1) !important;
     }
 
     .metric-val {
-        font-size: 28px;
-        font-weight: 700;
+        font-size: 30px !important;
+        font-weight: 800 !important;
         color: #0284C7;
     }
 
     .metric-lbl {
-        font-size: 13px;
-        color: #64748B;
-        font-weight: 500;
+        font-size: 13.5px !important;
+        color: #475569 !important;
+        font-weight: 600 !important;
         margin-top: 4px;
     }
 
@@ -197,21 +258,22 @@ st.markdown("""
 
     /* Button Styling: Serene Cerulean Blue */
     div.stButton > button {
-        border-radius: 12px;
+        border-radius: 14px;
         font-weight: 600;
         font-size: 15px;
         padding: 10px 24px;
         transition: all 0.2s ease;
     }
     div.stButton > button[kind="primary"] {
-        background-color: #0284C7;
-        border-color: #0284C7;
-        color: white;
+        background-color: #0284C7 !important;
+        border-color: #0284C7 !important;
+        color: white !important;
+        box-shadow: 0 4px 12px rgba(2, 132, 199, 0.25) !important;
     }
     div.stButton > button[kind="primary"]:hover {
-        background-color: #0369A1;
-        border-color: #0369A1;
-        box-shadow: 0 4px 14px rgba(2, 132, 199, 0.28);
+        background-color: #0369A1 !important;
+        border-color: #0369A1 !important;
+        box-shadow: 0 6px 18px rgba(2, 132, 199, 0.35) !important;
     }
 </style>
 """, unsafe_allow_html=True)
