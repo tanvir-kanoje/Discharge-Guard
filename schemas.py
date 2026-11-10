@@ -17,6 +17,7 @@ class TranslationItem(BaseModel):
     english: str
     marathi: str
     source_quote: str
+    hindi: Optional[str] = None
 
 class BackTranslationResult(BaseModel):
     original: str

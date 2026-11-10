@@ -137,6 +137,66 @@ def _generate_json(prompt: str) -> str:
     # Should not reach here
     raise Exception("Max retries exceeded")
 
+def extract_text_from_media(file_bytes: bytes, mime_type: str = "image/jpeg") -> str:
+    """
+    Extracts text from an image (JPEG, PNG, WEBP) or PDF document using Gemini 2.5 Flash
+    Multimodal Cloud Vision OCR. Caches the result using SHA256 of file bytes.
+    """
+    if not valid_api_key or client is None:
+        raise ValueError("No Gemini API key configured. Please set GEMINI_API_KEY.")
+
+    # Cache check
+    file_hash = hashlib.sha256(file_bytes).hexdigest()
+    cache_prompt = f"ocr_media_{file_hash}_{mime_type}"
+    cached = _get_cached_response(cache_prompt)
+    if cached is not None:
+        return cached
+
+    prompt = (
+        "You are an expert clinical records transcription assistant.\n"
+        "Carefully read and transcribe all English medical text, doctor notes, and "
+        "discharge instructions from this image or document with 100% precision.\n\n"
+        "Transcribe:\n"
+        "1. Patient diagnosis or summary if present\n"
+        "2. All discharge medications with exact drug names, dosages, frequencies (OD, BD, TID, SOS), and meal timings\n"
+        "3. Follow-up appointments, dates, and clinic instructions\n"
+        "4. Warning signs, red flags, and precautions\n\n"
+        "Preserve exact numbers, units (mg, ml, units), and clinical terms. "
+        "Do NOT invent or extrapolate anything. If a doctor's handwriting is illegible, mark it as [ILLEGIBLE].\n"
+        "Return the transcribed text in clean, formatted English."
+    )
+
+    max_retries = 3
+    wait_times = [5, 15, 30]
+    for attempt in range(max_retries):
+        try:
+            part = types.Part.from_bytes(data=file_bytes, mime_type=mime_type)
+            response = client.models.generate_content(
+                model=model_name,
+                contents=[part, prompt]
+            )
+            response_text = ""
+            if hasattr(response, 'text') and response.text:
+                response_text = response.text
+            elif hasattr(response, 'parts'):
+                for p in response.parts:
+                    if hasattr(p, 'text') and p.text:
+                        response_text += p.text
+
+            _save_to_cache(cache_prompt, response_text.strip())
+            return response_text.strip()
+        except Exception as e:
+            error_str = str(e).lower()
+            if "429" in error_str or "quota" in error_str or "resource exhausted" in error_str:
+                if attempt < max_retries - 1:
+                    time.sleep(wait_times[attempt])
+                    continue
+                else:
+                    raise e
+            else:
+                raise e
+    raise Exception("Max retries exceeded for media OCR")
+
 def extract(note: str) -> Tuple[List[ExtractedItem], str]:
     """Extract medical instructions from discharge note."""
     if not valid_api_key:
@@ -279,6 +339,51 @@ Return only valid JSON."""
         print(f"Translation error: {e}")
         # Fallback: simple placeholder
         return [{"id": idx, "marathi": "[Translation not available]"} for idx in range(len(items))]
+
+def translate_hindi(items: List[VerifiedItem]) -> List[Dict]:
+    """Translate verified items to Hindi in one call.
+    Returns list of dicts: [{"id": int, "hindi": str}]
+    """
+    if not valid_api_key:
+        raise ValueError("No API key set")
+    if not items:
+        return []
+    lines = []
+    for idx, item in enumerate(items):
+        lines.append(f"{idx+1}. {item.instruction}")
+    instructions = "\n".join(lines)
+    try:
+        with open("prompts/translate_hindi.md", "r") as f:
+            template = f.read()
+    except FileNotFoundError:
+        template = """Translate the following medical instructions from English to Hindi.
+Output simple spoken HINDI in Devanagari script.
+Drug names, doses, units and numbers MUST stay in Latin script and digits exactly as in the source.
+Return a JSON list of objects with keys: id (integer), hindi (string).
+INSTRUCTIONS:
+{instructions}
+Return only valid JSON."""
+    prompt = template.replace("{instructions}", instructions)
+    try:
+        raw_response = _generate_json(prompt)
+        text = raw_response
+        if text.startswith("```json"):
+            text = text[7:]
+        if text.endswith("```"):
+            text = text[:-3]
+        data = json.loads(text.strip())
+        translations = []
+        for i, entry in enumerate(data):
+            if isinstance(entry, dict) and "id" in entry and "hindi" in entry:
+                translations.append({"id": entry["id"], "hindi": entry["hindi"]})
+        if len(translations) != len(items):
+            translations.sort(key=lambda x: x.get("id", 0))
+            for i, t in enumerate(translations):
+                t["id"] = i
+        return translations
+    except Exception as e:
+        print(f"Hindi translation error: {e}")
+        return [{"id": idx, "hindi": "[Hindi translation not available]"} for idx in range(len(items))]
 
 def back_translate(marathi_list: List[Dict]) -> List[Dict]:
     """Translate Marathi items back to English in one call.
@@ -564,6 +669,14 @@ def run_pipeline(note: str) -> Tuple[PipelineOutput, Dict]:
             can_generate=False
         )
         return output, debug
+
+    # Translate verified items to Hindi for patient choice
+    try:
+        hindi_translation_list = translate_hindi(verified)
+        debug["hindi_translation_info"] = hindi_translation_list
+    except Exception as e:
+        hindi_translation_list = []
+        debug["hindi_translation_info"] = str(e)
     
     # Now we need to align the data: we have verified items (with index), translation_list, back_translation_list.
     # We'll create a list of dicts for each item with all needed info.
@@ -650,10 +763,15 @@ def run_pipeline(note: str) -> Tuple[PipelineOutput, Dict]:
             item_marathi_reason = "Marathi translation missing or error"
             marathi_validation_flags.append(f"Item {idx}: {item_marathi_reason}")
         
+        # Get Hindi translation if available
+        hindi_entry = next((h for h in hindi_translation_list if h["id"] == idx), None) if hindi_translation_list else None
+        hindi_trans = hindi_entry["hindi"] if hindi_entry else None
+
         # Build checklist item for output
         checklist_items.append(TranslationItem(
             english=instruction,
             marathi=marathi,
+            hindi=hindi_trans,
             source_quote=source_quote
         ))
         
